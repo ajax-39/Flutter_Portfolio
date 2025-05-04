@@ -46,7 +46,7 @@ class SkillsMobileWidget extends StatelessWidget {
           Center(
             child: Text(
               'Skills',
-              style: GoogleFonts.tourney(
+              style: GoogleFonts.baloo2(
                 fontSize: 31,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

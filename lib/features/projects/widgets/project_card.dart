@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../common/responsive_utils.dart';
 
 class ProjectCard extends StatefulWidget {
-  final List<String> imagePaths;
+  final String imagePath;
   final String title;
   final String description;
   final String githubUrl;
@@ -12,7 +12,7 @@ class ProjectCard extends StatefulWidget {
 
   const ProjectCard({
     super.key,
-    required this.imagePaths,
+    required this.imagePath,
     required this.title,
     required this.description,
     required this.githubUrl,
@@ -63,102 +63,111 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
+          mainAxisSize: MainAxisSize.min, // Use min to avoid extra space
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image Collage
-            Expanded(
-              flex: 3,
+            // Image Section
+            AspectRatio(
+              aspectRatio: 16 / 9,
               child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF0F172A),
-                  borderRadius: const BorderRadius.only(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF0F172A),
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(22),
                     topRight: Radius.circular(22),
                   ),
                 ),
-                child: _buildCollage(),
+                padding: const EdgeInsets.all(10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(widget.imagePath, fit: BoxFit.contain),
+                ),
               ),
             ),
-            // Content
-            Expanded(
-              flex: 2,
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(isMobile ? 16.0 : 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            widget.title,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: isMobile ? 19 : 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+            SizedBox(height: isMobile ? 8 : 12),
+
+            // Content Section - Tightened to remove extra space
+            Padding(
+              padding: EdgeInsets.all(isMobile ? 16.0 : 14.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Title and GitHub icon
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: isMobile ? 16 : 20,
+                            fontWeight: FontWeight.bold,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        // GitHub Link
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: _launchGithubUrl,
-                            child: Container(
-                              height: isMobile ? 38 : 32,
-                              width: isMobile ? 38 : 32,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.1),
-                              ),
-                              padding: EdgeInsets.all(isMobile ? 8 : 6),
-                              child: SvgPicture.asset(
-                                'assets/icons/github.svg',
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: isMobile ? 10 : 8),
-                    // Description
-                    Expanded(
-                      child: Text(
-                        widget.description,
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
-                          fontSize: isMobile ? 13 : 12,
-                          height: 1.4,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: widget.technologies.isEmpty ? 4 : 3,
                       ),
+                      const SizedBox(width: 8),
+                      // GitHub Link
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: _launchGithubUrl,
+                          child: Container(
+                            height: isMobile ? 26 : 36,
+                            width: isMobile ? 26 : 36,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withOpacity(0.1),
+                            ),
+                            padding: EdgeInsets.all(isMobile ? 8 : 6),
+                            child: SvgPicture.asset(
+                              'assets/icons/github.svg',
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: isMobile ? 8 : 12),
+
+                  // Description with fixed height to avoid variable spacing
+                  Text(
+                    widget.description,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.7),
+                      fontSize: isMobile ? 16 : 15, // Increased font size
+                      height: 1.4,
                     ),
-                    // Technology tags
-                    if (widget.technologies.isNotEmpty) ...[
-                      SizedBox(height: isMobile ? 10 : 8),
-                      SizedBox(
-                        height: isMobile ? 28 : 24,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: widget.technologies.length,
-                          separatorBuilder:
-                              (context, index) =>
-                                  SizedBox(width: isMobile ? 8 : 6),
-                          itemBuilder: (context, index) {
-                            return Container(
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: isMobile ? 8 : 12),
+
+                  // Technology tags with optimized layout
+                  if (widget.technologies.isNotEmpty) ...[
+                    SizedBox(height: isMobile ? 12 : 10),
+                    SizedBox(
+                      height:
+                          isMobile ? 30 : 28, // Adjusted height for larger font
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.technologies.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(right: isMobile ? 6 : 4),
+                            child: Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: isMobile ? 10 : 8,
-                                vertical: isMobile ? 5 : 3,
+                                horizontal: isMobile ? 8 : 6,
+                                vertical: isMobile ? 4 : 3,
                               ),
                               decoration: BoxDecoration(
                                 color: const Color(
@@ -176,129 +185,23 @@ class _ProjectCardState extends State<ProjectCard> {
                                 widget.technologies[index],
                                 style: TextStyle(
                                   color: const Color(0xFF13BBFF),
-                                  fontSize: isMobile ? 11 : 12,
+                                  fontSize:
+                                      isMobile ? 14 : 13, // Increased font size
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
-                    ],
+                    ),
                   ],
-                ),
+                ],
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildCollage() {
-    if (widget.imagePaths.isEmpty) {
-      return Container(color: const Color(0xFF0F172A));
-    }
-
-    if (widget.imagePaths.length == 1) {
-      return Container(
-        padding: const EdgeInsets.all(15),
-        child: Image.asset(widget.imagePaths[0], fit: BoxFit.contain),
-      );
-    }
-
-    if (widget.imagePaths.length == 2) {
-      return Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(9),
-              child: Image.asset(widget.imagePaths[0], fit: BoxFit.contain),
-            ),
-          ),
-          const SizedBox(width: 1),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(9),
-              child: Image.asset(widget.imagePaths[1], fit: BoxFit.contain),
-            ),
-          ),
-        ],
-      );
-    }
-
-    // For 3 or 4 images
-    return Column(
-      children: [
-        Expanded(
-          flex: 1,
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 9,
-                    right: 4.5,
-                    top: 9,
-                    bottom: 4.5,
-                  ),
-                  child: Image.asset(widget.imagePaths[0], fit: BoxFit.contain),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 4.5,
-                    right: 9,
-                    top: 9,
-                    bottom: 4.5,
-                  ),
-                  child: Image.asset(widget.imagePaths[1], fit: BoxFit.contain),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 9,
-                    right: 4.5,
-                    top: 4.5,
-                    bottom: 9,
-                  ),
-                  child: Image.asset(
-                    widget.imagePaths.length > 2
-                        ? widget.imagePaths[2]
-                        : widget.imagePaths[0],
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 4.5,
-                    right: 9,
-                    top: 4.5,
-                    bottom: 9,
-                  ),
-                  child: Image.asset(
-                    widget.imagePaths.length > 3
-                        ? widget.imagePaths[3]
-                        : widget.imagePaths[1],
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

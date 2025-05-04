@@ -26,7 +26,8 @@ class SkillCard extends StatefulWidget {
   State<SkillCard> createState() => _SkillCardState();
 }
 
-class _SkillCardState extends State<SkillCard> with SingleTickerProviderStateMixin {
+class _SkillCardState extends State<SkillCard>
+    with SingleTickerProviderStateMixin {
   double _scale = 1.0;
   bool _isHovered = false;
 
@@ -50,89 +51,144 @@ class _SkillCardState extends State<SkillCard> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    final cardSize = widget.isDesktop ? 150.0 : 100.0;
-    
+    // Perfect square size based on desktop/mobile
+    final cardSize = widget.isDesktop ? 140.0 : 100.0;
+    // Calculate icon size to maintain proportions with padding
+    final imageSize = cardSize * 0.6;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedScale(
         scale: _scale,
-        duration: const Duration(milliseconds: 100),
-        child: Container(
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.easeInOut,
+        child: SizedBox(
           width: cardSize,
-          height: cardSize,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            boxShadow: _isHovered 
-              ? [
-                  BoxShadow(
-                    color: Colors.blue.withOpacity(0.6),
-                    blurRadius: 20,
-                    spreadRadius: 5,
-                  )
-                ] 
-              : [],
-          ),
-          child: InkWell(
-            onTap: () {
-              // Optionally show details or trigger an animation
-            },
-            onTapDown: _onTapDown,
-            onTapUp: _onTapUp,
-            onTapCancel: _onTapCancel,
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            child: Card(
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(widget.borderRadius)),
-              elevation: _isHovered ? widget.elevation + 1 : widget.elevation,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: _isHovered 
-                      ? [Colors.blue.shade100, Colors.blue.shade200]
-                      : [Colors.blue.shade50, Colors.blue.shade100],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                ),
+          height:
+              cardSize +
+              (widget.textSize * 2.0), // Add more height for text below
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Card with image
+              Container(
                 width: cardSize,
                 height: cardSize,
-                padding: EdgeInsets.all(widget.cardPadding),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      height: widget.iconSize,
-                      width: widget.iconSize,
-                      child: SvgPicture.asset(
-                        widget.skill.iconPath,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    SizedBox(height: widget.isDesktop ? widget.cardPadding : widget.cardPadding),
-                    Flexible(
-                      child: Text(
-                        widget.skill.label,
-                        style: TextStyle(
-                          fontSize: widget.textSize,
-                          fontWeight: FontWeight.w600,
-                          color: _isHovered ? Colors.blue.shade700 : Colors.black87,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  boxShadow:
+                      _isHovered
+                          ? [
+                            BoxShadow(
+                              color: Color(0xFF13BBFF).withOpacity(0.6),
+                              blurRadius: 15,
+                              spreadRadius: 2,
+                              offset: Offset(0, 4),
+                            ),
+                          ]
+                          : [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 8,
+                              spreadRadius: 1,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      // Optionally show details or trigger an animation
+                    },
+                    onTapDown: _onTapDown,
+                    onTapUp: _onTapUp,
+                    onTapCancel: _onTapCancel,
+                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors:
+                              _isHovered
+                                  ? [
+                                    Color(0xFF1A2151).withOpacity(0.9),
+                                    Color(0xFF1F3A93).withOpacity(0.9),
+                                  ]
+                                  : [
+                                    Color(0xFF1A2151).withOpacity(0.7),
+                                    Color(0xFF1F3A93).withOpacity(0.7),
+                                  ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        borderRadius: BorderRadius.circular(
+                          widget.borderRadius,
+                        ),
+                        border: Border.all(
+                          color:
+                              _isHovered
+                                  ? Color(0xFF13BBFF)
+                                  : Colors.transparent,
+                          width: 1.5,
+                        ),
+                      ),
+                      padding: EdgeInsets.all(widget.cardPadding),
+                      child: Center(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          height: imageSize,
+                          width: imageSize,
+                          padding: EdgeInsets.all(widget.cardPadding / 2),
+                          decoration: BoxDecoration(
+                            color:
+                                _isHovered
+                                    ? Colors.white.withOpacity(0.15)
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(
+                              widget.borderRadius / 2,
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                            widget.skill.iconPath,
+                            fit: BoxFit.contain,
+                            colorFilter:
+                                _isHovered
+                                    ? ColorFilter.mode(
+                                      Colors.white,
+                                      BlendMode.srcIn,
+                                    )
+                                    : null,
+                          ),
+                        ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+
+              // Text below card
+              Container(
+                padding: EdgeInsets.only(top: 8.0),
+                width: cardSize,
+                child: Text(
+                  widget.skill.label,
+                  style: TextStyle(
+                    fontSize: widget.textSize,
+                    fontWeight: FontWeight.w600,
+                    color: _isHovered ? Color(0xFF13BBFF) : Colors.white,
+                    letterSpacing: 0.5,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-} 
+}

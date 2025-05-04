@@ -8,15 +8,14 @@ class ProjectsMobileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 0.7;
-    final cardHeight = 400.0; // Increased height to avoid overflow
-    
+    final cardWidth = screenWidth * 0.85;
+
     return Column(
       children: [
         Center(
           child: Text(
-            'Featured Projects',
-            style: GoogleFonts.tourney(
+            'Projects',
+            style: GoogleFonts.baloo2(
               fontSize: 31,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -24,98 +23,123 @@ class ProjectsMobileWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 25), // Reduced from 30
-        
-        // First row of projects (FlutterAmazon and Scribble)
-        SizedBox(
-          height: cardHeight,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const SizedBox(width: 12), // Reduced from 16
-                SizedBox(
-                  width: cardWidth,
-                  height: cardHeight,
-                  child: ProjectCard(
-                    imagePaths: [
-                      'assets/projects/user1.png',
-                      'assets/projects/user2.png',
-                    ],
-                    title: 'FlutterAmazon',
-                    description: 'FlutterAmazon is a full-featured Amazon clone built with Flutter for the frontend and Node.js/Express with MongoDB for the backend. Deployed using Render, this project offers a robust e-commerce experience with role-based functionalities for both users and administrators.',
-                    githubUrl: 'https://github.com/Amogh050/FlutterAmazon',
-                    technologies: ['Flutter', 'NodeJS', 'MongoDB', 'JWT', 'Render'],
-                  ),
-                ),
-                const SizedBox(width: 20), // Reduced from 24
-                SizedBox(
-                  width: cardWidth,
-                  height: cardHeight,
-                  child: ProjectCard(
-                    imagePaths: [
-                      'assets/projects/scribble1.png',
-                      'assets/projects/scribble3.png',
-                    ],
-                    title: 'Scribble',
-                    description: 'Scribble is a fun and interactive multiplayer drawing and guessing game where players take turns drawing an assigned word while others try to guess it. Compete with friends in a fast-paced game that challenges your creativity and word-guessing skills!',
-                    githubUrl: 'https://github.com/Amogh050/Scribble',
-                    technologies: ['Flutter', 'NodeJS', 'MongoDB', 'WebSockets'],
-                  ),
-                ),
-                const SizedBox(width: 12), // Reduced from 16
+        const SizedBox(height: 25),
+
+        // Project 1: Scribble
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            width: cardWidth,
+            child: ProjectCard(
+              imagePath: 'assets/projects/scribble.png',
+              title: 'Scribble : Drawing & Guessing Game',
+              description:
+                  'Built with Socket.IO, Flutter, Node.js, and MongoDB. Implements real-time multiplayer functionality with custom drawing canvas and gesture detection.',
+              githubUrl: 'https://github.com/ajax-39/Scribble',
+              technologies: ['Socket.IO', 'Flutter', 'Node.js', 'MongoDB'],
+            ),
+          ),
+        ),
+
+        // Project 2: bSafe
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            width: cardWidth,
+            child: ProjectCard(
+              imagePath: 'assets/projects/bSafe.png',
+              title: 'bSafe : Women\'s Safety App',
+              description:
+                  'Built with Flutter, Firebase, and Google Maps API. Implements real-time location tracking with Geolocator and Flutter_SMS for Alert Message sending.',
+              githubUrl: 'https://github.com/ajax-39/Flutter_bSafe',
+              technologies: [
+                'Flutter',
+                'Firebase',
+                'Google Maps API',
+                'Geolocator',
+                'Flutter_SMS',
               ],
             ),
           ),
         ),
-        
-        const SizedBox(height: 20), // Reduced from 24
-        
-        // Second row of projects (FlutterNews and Echo AI)
-        SizedBox(
-          height: cardHeight,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const SizedBox(width: 12), // Reduced from 16
-                SizedBox(
-                  width: cardWidth,
-                  height: cardHeight,
-                  child: ProjectCard(
-                    imagePaths: [
-                      'assets/projects/news1.png',
-                      'assets/projects/news2.png',
-                    ],
-                    title: 'FlutterNews',
-                    description: 'FlutterNews is a Flutter application that fetches and displays news articles dynamically using an API. It features category-based filtering, location-based news, and a user-friendly UI. Additionally, it integrates Gemini AI to summarize news articles efficiently.',
-                    githubUrl: 'https://github.com/Amogh050/FlutterNews',
-                    technologies: ['Flutter', 'Riverpod', 'API'],
-                  ),
-                ),
-                const SizedBox(width: 20), // Reduced from 24
-                SizedBox(
-                  width: cardWidth,
-                  height: cardHeight,
-                  child: ProjectCard(
-                    imagePaths: [
-                      'assets/projects/echo1.png',
-                      'assets/projects/echo2.png',
-                    ],
-                    title: 'Echo AI',
-                    description: 'Echo-AI is a simple Flutter project where you can interact with the app using your voice. The app listens to your commands and reads its responses aloud. It also supports generating images based on your input.',
-                    githubUrl: 'https://github.com/Amogh050/Echo-AI',
-                    technologies: ['Flutter', 'API', 'Text-to-Speech'],
-                  ),
-                ),
-                const SizedBox(width: 12), // Reduced from 16
+
+        // Project 3: Pokedex
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            width: cardWidth,
+            child: ProjectCard(
+              imagePath: 'assets/projects/pokedex.png',
+              title: 'Pokedex : Pokemon App',
+              description:
+                  'Developed with Flutter and PokeAPI integration. Uses Riverpod for state management, Dio for API Calls and SharedPreferences for local storage.',
+              githubUrl: 'https://github.com/ajax-39/Flutter_Pokedex',
+              technologies: [
+                'Flutter',
+                'PokeAPI',
+                'Riverpod',
+                'Dio',
+                'SharedPreferences',
               ],
             ),
           ),
         ),
-        
-        const SizedBox(height: 20), // Reduced from 24
+
+        // Project 4: QuickChat
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            width: cardWidth,
+            child: ProjectCard(
+              imagePath: 'assets/projects/mychat.png',
+              title: 'QuickChat: WhatsApp Clone',
+              description:
+                  'Developed with Flutter, Firebase (Firestore/Auth/Storage), and Riverpod 2.0 for state management. Features real-time messaging with push notifications.',
+              githubUrl: 'https://github.com/ajax-39/Flutter_WhatsApp_Clone',
+              technologies: [
+                'Flutter',
+                'Firebase',
+                'Firestore',
+                'Riverpod 2.0',
+              ],
+            ),
+          ),
+        ),
+
+        // Project 5: InfoMeal
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            width: cardWidth,
+            child: ProjectCard(
+              imagePath: 'assets/projects/infomeal.png',
+              title: 'InfoMeal: Recipe App',
+              description:
+                  'Created using Flutter, Dio for REST API integration, and Provider for state management. Implements custom UI components and animations.',
+              githubUrl: 'https://github.com/ajax-39/Flutter_InfoMeal',
+              technologies: ['Flutter', 'Dio', 'Provider', 'REST API'],
+            ),
+          ),
+        ),
+
+        // Project 6: Foodo
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            width: cardWidth,
+            child: ProjectCard(
+              imagePath: 'assets/projects/foodo.png',
+              title: 'Foodo : Food Delivery App',
+              description:
+                  'Built with Flutter, Firebase backend. Integrates Google Maps for location-based services and custom animations.',
+              githubUrl: 'https://github.com/ajax-39/Flutter_Foodo',
+              technologies: ['Flutter', 'Firebase', 'Google Maps'],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 20),
       ],
     );
   }
-} 
+}

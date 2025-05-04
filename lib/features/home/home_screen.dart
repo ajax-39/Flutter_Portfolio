@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../common/responsive_utils.dart';
-import '../intro/widgets/intro_desktop_widget.dart';
-import '../intro/widgets/intro_mobile_widget.dart';
 import '../skills/widgets/skills_desktop_widget.dart';
 import '../skills/widgets/skills_mobile_widget.dart';
 import '../projects/widgets/projects_desktop_widget.dart';
@@ -23,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-  final List<GlobalKey> _sectionKeys = List.generate(5, (index) => GlobalKey());
+  final List<GlobalKey> _sectionKeys = List.generate(4, (index) => GlobalKey());
   int _currentSection = 0;
 
   // Animation controllers for each section
@@ -38,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     // Initialize animation controllers for each section
     _animationControllers = List.generate(
-      5,
+      4,
       (index) => AnimationController(
         duration: const Duration(milliseconds: 800),
         vsync: this,
@@ -152,9 +150,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                // Intro Section
+                // Skills Section
                 VisibilityDetector(
-                  key: const Key('intro-section'),
+                  key: const Key('skills-section'),
                   onVisibilityChanged: (info) {
                     if (info.visibleFraction > 0.3 &&
                         !_animationControllers[1].isCompleted) {
@@ -165,34 +163,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     opacity: _fadeAnimations[1],
                     child: Container(
                       key: _sectionKeys[1],
-                      height:
-                          isDesktop ? MediaQuery.of(context).size.height : null,
-                      padding: EdgeInsets.only(
-                        top: isDesktop ? 90.0 : 80.0,
-                        left: isDesktop ? 100.0 : 20.0,
-                        right: isDesktop ? 100.0 : 20.0,
-                        bottom: isDesktop ? 0.0 : 20.0,
-                      ),
-                      child:
-                          isDesktop
-                              ? const IntroDesktopWidget()
-                              : const IntroMobileWidget(),
-                    ),
-                  ),
-                ),
-                // Skills Section
-                VisibilityDetector(
-                  key: const Key('skills-section'),
-                  onVisibilityChanged: (info) {
-                    if (info.visibleFraction > 0.3 &&
-                        !_animationControllers[2].isCompleted) {
-                      _animationControllers[2].forward();
-                    }
-                  },
-                  child: FadeTransition(
-                    opacity: _fadeAnimations[2],
-                    child: Container(
-                      key: _sectionKeys[2],
                       height: MediaQuery.of(context).size.height,
                       padding: EdgeInsets.only(
                         top: 90.0,
@@ -212,14 +182,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   key: const Key('projects-section'),
                   onVisibilityChanged: (info) {
                     if (info.visibleFraction > 0.3 &&
-                        !_animationControllers[3].isCompleted) {
-                      _animationControllers[3].forward();
+                        !_animationControllers[2].isCompleted) {
+                      _animationControllers[2].forward();
                     }
                   },
                   child: FadeTransition(
-                    opacity: _fadeAnimations[3],
+                    opacity: _fadeAnimations[2],
                     child: Container(
-                      key: _sectionKeys[3],
+                      key: _sectionKeys[2],
                       width: double.infinity,
                       padding: EdgeInsets.only(
                         top: 90.0,
@@ -239,14 +209,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   key: const Key('contact-section'),
                   onVisibilityChanged: (info) {
                     if (info.visibleFraction > 0.3 &&
-                        !_animationControllers[4].isCompleted) {
-                      _animationControllers[4].forward();
+                        !_animationControllers[3].isCompleted) {
+                      _animationControllers[3].forward();
                     }
                   },
                   child: FadeTransition(
-                    opacity: _fadeAnimations[4],
+                    opacity: _fadeAnimations[3],
                     child: Container(
-                      key: _sectionKeys[4],
+                      key: _sectionKeys[3],
                       width: double.infinity,
                       padding: EdgeInsets.only(
                         top: 90.0,
@@ -314,13 +284,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           children: [
                             _buildNavLink('Home', 0),
                             const SizedBox(width: 40),
-                            _buildNavLink('About', 1),
+                            _buildNavLink('Skills', 1),
                             const SizedBox(width: 40),
-                            _buildNavLink('Skills', 2),
+                            _buildNavLink('Projects', 2),
                             const SizedBox(width: 40),
-                            _buildNavLink('Projects', 3),
-                            const SizedBox(width: 40),
-                            _buildNavLink('Contact', 4),
+                            _buildNavLink('Contact', 3),
                           ],
                         )
                       else
@@ -348,10 +316,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               itemBuilder:
                                   (context) => [
                                     _buildPopupMenuItem('Home', 0),
-                                    _buildPopupMenuItem('About', 1),
-                                    _buildPopupMenuItem('Skills', 2),
-                                    _buildPopupMenuItem('Projects', 3),
-                                    _buildPopupMenuItem('Contact', 4),
+                                    _buildPopupMenuItem('Skills', 1),
+                                    _buildPopupMenuItem('Projects', 2),
+                                    _buildPopupMenuItem('Contact', 3),
                                   ],
                             ),
                           ),

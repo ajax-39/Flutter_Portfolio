@@ -11,8 +11,8 @@ class ProjectsDesktopWidget extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            'Featured Projects',
-            style: GoogleFonts.tourney(
+            'Projects',
+            style: GoogleFonts.baloo2(
               fontSize: 45,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -22,56 +22,85 @@ class ProjectsDesktopWidget extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.68,
+          width: MediaQuery.of(context).size.width * 0.85,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              childAspectRatio: 1.15,
-              crossAxisSpacing: 60,
-              mainAxisSpacing: 25,
+              crossAxisCount: 3,
+              childAspectRatio: 0.85, // Adjusted for rectangular image format
+              crossAxisSpacing: 30,
+              mainAxisSpacing: 30, // Increased spacing for better layout
               children: [
-                ProjectCard(
-                  imagePaths: [
-                    'assets/projects/user1.png',
-                    'assets/projects/user2.png',
-                  ],
-                  title: 'FlutterAmazon',
-                  description: 'FlutterAmazon is a full-featured Amazon clone built with Flutter for the frontend and Node.js/Express with MongoDB for the backend. Deployed using Render, this project offers a robust e-commerce experience with role-based functionalities for both users and administrators.',
-                  githubUrl: 'https://github.com/Amogh050/FlutterAmazon',
-                  technologies: ['Flutter', 'NodeJS', 'MongoDB', 'JWT', 'Render'],
+                // First Row
+                ProjectCard( 
+                  imagePath: 'assets/projects/scribble.png',
+                  title: 'Scribble : Drawing & Guessing Game',
+                  description:
+                      'Built with Socket.IO, Flutter, Node.js, and MongoDB. Implements real-time multiplayer functionality with custom drawing canvas and gesture detection.',
+                  githubUrl: 'https://github.com/ajax-39/Scribble',
+                  technologies: ['Socket.IO', 'Flutter', 'Node.js', 'MongoDB'],
                 ),
                 ProjectCard(
-                  imagePaths: [
-                    'assets/projects/scribble1.png',
-                    'assets/projects/scribble3.png',
+                  imagePath: 'assets/projects/bSafe.png',
+                  title: 'bSafe : Women\'s Safety App',
+                  description:
+                      'Built with Flutter, Firebase, and Google Maps API. Implements real-time location tracking with Geolocator and Flutter_SMS for Alert Message sending.',
+                  githubUrl: 'https://github.com/ajax-39/Flutter_bSafe',
+                  technologies: [
+                    'Flutter',
+                    'Firebase',
+                    'Google Maps API',
+                    'Geolocator',
+                    'Flutter_SMS', 
                   ],
-                  title: 'Scribble',
-                  description: 'Scribble is a fun and interactive multiplayer drawing and guessing game where players take turns drawing an assigned word while others try to guess it. Compete with friends in a fast-paced game that challenges your creativity and word-guessing skills!',
-                  githubUrl: 'https://github.com/Amogh050/Scribble',
-                  technologies: ['Flutter', 'NodeJS', 'MongoDB', 'WebSockets'],
                 ),
                 ProjectCard(
-                  imagePaths: [
-                    'assets/projects/news1.png',
-                    'assets/projects/news2.png',
+                  imagePath: 'assets/projects/pokedex.png',
+                  title: 'Pokedex : Pokemon App',
+                  description:
+                      'Developed with Flutter and PokeAPI integration. Uses Riverpod for state management, Dio for API Calls and SharedPreferences for local storage.',
+                  githubUrl: 'https://github.com/ajax-39/Flutter_Pokedex',
+                  technologies: [
+                    'Flutter',
+                    'PokeAPI',
+                    'Riverpod',
+                    'Dio',
+                    'SharedPreferences',
                   ],
-                  title: 'FlutterNews',
-                  description: 'FlutterNews is a Flutter application that fetches and displays news articles dynamically using an API. It features category-based filtering, location-based news, and a user-friendly UI. Additionally, it integrates Gemini AI to summarize news articles efficiently.',
-                  githubUrl: 'https://github.com/Amogh050/FlutterNews',
-                  technologies: ['Flutter', 'Riverpod', 'API'],
+                ),
+
+                // Second Row
+                ProjectCard(
+                  imagePath: 'assets/projects/mychat.png',
+                  title: 'QuickChat: WhatsApp Clone',
+                  description:
+                      'Developed with Flutter, Firebase (Firestore/Auth/Storage), and Riverpod 2.0 for state management. Features real-time messaging with push notifications.',
+                  githubUrl:
+                      'https://github.com/ajax-39/Flutter_WhatsApp_Clone',
+                  technologies: [
+                    'Flutter',
+                    'Firebase',
+                    'Firestore',
+                    'Riverpod 2.0',
+                  ],
                 ),
                 ProjectCard(
-                  imagePaths: [
-                    'assets/projects/echo1.png',
-                    'assets/projects/echo2.png',
-                  ],
-                  title: 'Echo AI',
-                  description: 'Echo-AI is a simple Flutter project where you can interact with the app using your voice. The app listens to your commands and reads its responses aloud. It also supports generating images based on your input.',
-                  githubUrl: 'https://github.com/Amogh050/Echo-AI',
-                  technologies: ['Flutter', 'API', 'Text-to-Speech'],
+                  imagePath: 'assets/projects/infomeal.png',
+                  title: 'InfoMeal: Recipe App',
+                  description:
+                      'Created using Flutter, Dio for REST API integration, and Provider for state management. Implements custom UI components and animations.',
+                  githubUrl: 'https://github.com/ajax-39/Flutter_InfoMeal',
+                  technologies: ['Flutter', 'Dio', 'Provider', 'REST API'],
+                ),
+                ProjectCard(
+                  imagePath: 'assets/projects/foodo.png',
+                  title: 'Foodo : Food Delivery App',
+                  description:
+                      'Built with Flutter, Firebase backend. Integrates Google Maps for location-based services and custom animations.',
+                  githubUrl: 'https://github.com/ajax-39/Flutter_Foodo',
+                  technologies: ['Flutter', 'Firebase', 'Google Maps'],
                 ),
               ],
             ),
@@ -80,4 +109,4 @@ class ProjectsDesktopWidget extends StatelessWidget {
       ],
     );
   }
-} 
+}
