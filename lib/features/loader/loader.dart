@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Loader extends StatefulWidget {
   const Loader({super.key});
@@ -42,18 +43,10 @@ class _LoaderState extends State<Loader> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background gradient
+          // Background transparent
           Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF0A0A1A), // Darker blue-black
-                  Color(0xFF0D1525), // Darker blue
-                  Color(0xFF0A1F3C), // Darker purple-blue
-                ],
-              ),
+              color: Colors.transparent, // Transparent background
             ),
           ),
 
@@ -90,7 +83,21 @@ class _LoaderState extends State<Loader> {
                 // Loading animation with decreased speed
                 LoadingAnimationWidget.fourRotatingDots(
                   color: const Color(0xFF13BBFF),
-                  size: 80,
+                  size: 100,
+                ),
+
+                const SizedBox(height: 50),
+
+                // Loading text
+                Text(
+                  "Loading...",
+                  style: GoogleFonts.baloo2(
+                    textStyle: const TextStyle(
+                      color: Color(0xFF13BBFF),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ],
             ),
