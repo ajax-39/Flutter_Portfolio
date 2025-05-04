@@ -84,11 +84,10 @@ class _TypingAnimationWidgetState extends State<TypingAnimationWidget> {
   Widget build(BuildContext context) {
     return Text(
       _currentText,
-      style: TextStyle(
-        fontFamily: 'Ethnocentric',
-        color: widget.textColor,
-        fontSize: widget.fontSize,
-        fontWeight: FontWeight.w600,
+      style: GoogleFonts.bangers(
+      color: widget.textColor,
+      fontSize: widget.fontSize,
+      // fontWeight: FontWeight.w600,
       ),
       textAlign: widget.isMobile ? TextAlign.center : TextAlign.left,
     );

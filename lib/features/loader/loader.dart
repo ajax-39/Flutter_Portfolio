@@ -43,10 +43,12 @@ class _LoaderState extends State<Loader> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background transparent
+          // Background dark blue
           Container(
             decoration: const BoxDecoration(
-              color: Colors.transparent, // Transparent background
+              color: Color(
+                0xFF061A2C,
+              ), // Dark blue shade that complements the accent color
             ),
           ),
 
@@ -93,6 +95,7 @@ class _LoaderState extends State<Loader> {
                   "Loading...",
                   style: GoogleFonts.baloo2(
                     textStyle: const TextStyle(
+                      // color: Color(0xFF13BBFF),
                       color: Color(0xFF13BBFF),
                       fontSize: 30,
                       fontWeight: FontWeight.w500,
