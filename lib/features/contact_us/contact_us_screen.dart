@@ -14,7 +14,7 @@ class ContactUsScreen extends StatelessWidget {
           return const ContactUsDesktopWidget();
         } else {
           return const ContactUsMobileWidget();
-        }
+        } 
       },
     );
   }

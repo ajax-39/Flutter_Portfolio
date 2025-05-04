@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:portfolio/features/contact_us/contact_us_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../intro/widgets/typing_animation_widget.dart';
 import '../../../design/circuit_background.dart';
+import '../../common/responsive_utils.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -29,6 +31,48 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isMobile = ResponsiveUtils.isMobile(context);
+
+    // Responsive sizing
+    final nameTextSize =
+        isMobile
+            ? size.width *
+                0.08 // Dynamic size for mobile
+            : size.width > 1400
+            ? 90.0 // Large desktop
+            : size.width > 800
+            ? 70.0 // Medium desktop
+            : 50.0; // Small desktop
+
+    final greetingTextSize =
+        isMobile
+            ? size.width *
+                0.05 // Dynamic size for mobile
+            : size.width > 1400
+            ? 32.0 // Large desktop
+            : size.width > 800
+            ? 28.0 // Medium desktop
+            : 24.0; // Small desktop
+
+    final typingAnimationSize =
+        isMobile
+            ? size.width *
+                0.06 // Dynamic size for mobile
+            : size.width > 1400
+            ? 50.0 // Large desktop
+            : size.width > 800
+            ? 40.0 // Medium desktop
+            : 30.0; // Small desktop
+
+    final aboutTextSize =
+        isMobile
+            ? 16.0
+            : size.width > 1400
+            ? 18.0
+            : 16.0;
+
+    // Calculate responsive horizontal padding
+    final horizontalPadding = isMobile ? size.width * 0.05 : size.width * 0.1;
 
     return CircuitBoardBackground(
       child: NotificationListener<ScrollNotification>(
@@ -56,10 +100,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: IntrinsicHeight(
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: size.height * 0.15, // Fixed top padding for desktop
-                  left: size.width * 0.1, // 10% horizontal padding
-                  right: size.width * 0.1, // 10% horizontal padding
-                  bottom: 40.0,
+                  top: isMobile ? size.height * 0.1 : size.height * 0.15,
+                  left: horizontalPadding,
+                  right: horizontalPadding,
+                  bottom: isMobile ? 20.0 : 40.0,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,18 +112,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     Text(
                       'Hey there! 👋',
                       style: GoogleFonts.poppins(
-                        fontSize: 32.0, // Fixed desktop size
+                        fontSize: greetingTextSize,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
                     ),
 
-                    const SizedBox(height: 10.0), // Fixed desktop spacing
+                    SizedBox(height: isMobile ? 5.0 : 10.0),
                     // Name with left alignment
                     Text(
                       "I'm Atharv Jagzap",
                       style: GoogleFonts.baloo2(
-                        fontSize: 90.0, // Fixed desktop size
+                        fontSize: nameTextSize,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         letterSpacing: 1.5,
@@ -87,72 +131,67 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
 
                     // Typewriter animation with left alignment
-                    const TypingAnimationWidget(
-                      fontSize: 50.0, // Fixed desktop size
-                      textColor: Color(0xFF13BBFF),
-                      isMobile: false,
+                    TypingAnimationWidget(
+                      fontSize: typingAnimationSize,
+                      textColor: const Color(0xFF13BBFF),
+                      isMobile: isMobile,
                     ),
 
-                    const SizedBox(height: 30.0), // Fixed desktop spacing
+                    SizedBox(height: isMobile ? 15.0 : 30.0),
                     // About info text - width constraint for better readability
                     Container(
                       constraints: BoxConstraints(
-                        maxWidth: size.width * 0.5, // Fixed desktop width
+                        maxWidth:
+                            isMobile ? size.width * 0.9 : size.width * 0.5,
                       ),
                       child: Text(
                         "I'm Atharv, an Android developer skilled in Flutter. I also have backend experience using Spring Boot. I love building real-world apps. I enjoy turning ideas into smooth, working mobile apps. From designing UI to writing backend code — I do it all.",
                         style: GoogleFonts.poppins(
-                          fontSize: 18.0, // Fixed desktop size
+                          fontSize: aboutTextSize,
                           color: Colors.white.withOpacity(0.9),
                           height: 1.5,
                         ),
                       ),
                     ),
 
-                    const SizedBox(height: 40.0), // Fixed desktop spacing
+                    SizedBox(height: isMobile ? 25.0 : 40.0),
                     // Social media icons
-                    const Wrap(
-                      spacing: 20.0, // Fixed desktop spacing
-                      runSpacing: 20.0, // Fixed desktop spacing
+                    Wrap(
+                      spacing: isMobile ? 15.0 : 20.0,
+                      runSpacing: isMobile ? 15.0 : 20.0,
                       children: [
                         // GitHub
                         _SocialButton(
                           icon: FontAwesomeIcons.github,
                           url: 'https://github.com/ajax-39',
-                          size: 52.0, // Fixed desktop size
-                          iconSize: 30.0, // Fixed desktop size
+                          size: isMobile ? 42.0 : 52.0,
+                          iconSize: isMobile ? 22.0 : 30.0,
                         ),
                         // LinkedIn
                         _SocialButton(
                           icon: FontAwesomeIcons.linkedin,
                           url: 'https://www.linkedin.com/in/atharv-jagzap/',
-                          size: 52.0, // Fixed desktop size
-                          iconSize: 30.0, // Fixed desktop size
+                          size: isMobile ? 42.0 : 52.0,
+                          iconSize: isMobile ? 22.0 : 30.0,
                         ),
                         // WhatsApp
                         _SocialButton(
                           icon: FontAwesomeIcons.whatsapp,
                           url: 'https://wa.me/919975202001',
-                          size: 52.0, // Fixed desktop size
-                          iconSize: 30.0, // Fixed desktop size
+                          size: isMobile ? 42.0 : 52.0,
+                          iconSize: isMobile ? 22.0 : 30.0,
                         ),
                       ],
                     ),
 
-                    const SizedBox(height: 40.0), // Fixed desktop spacing
+                    SizedBox(height: isMobile ? 25.0 : 40.0),
                     // Action buttons
                     Wrap(
-                      spacing: 16.0,
-                      runSpacing: 16.0,
+                      spacing: isMobile ? 10.0 : 16.0,
+                      runSpacing: isMobile ? 10.0 : 16.0,
                       children: [
                         _buildActionButton(
-                          text: 'Message Me',
-                          color: const Color(0xFF13BBFF),
-                          onPressed:
-                              () => _launchURL('https://wa.me/919975202001'),
-                        ),
-                        _buildActionButton(
-                          text: 'Download Resume',
+                          text: 'Resume',
                           color: const Color(0xFF13BBFF),
                           onPressed:
                               () => _launchURL(
@@ -176,6 +215,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     required Color color,
     required VoidCallback onPressed,
   }) {
+    final isMobile = ResponsiveUtils.isMobile(context);
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: Container(
@@ -190,14 +231,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             onTap: onPressed,
             borderRadius: BorderRadius.circular(8),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0, // Fixed desktop value
-                vertical: 12.0, // Fixed desktop value
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 16.0 : 24.0,
+                vertical: isMobile ? 8.0 : 12.0,
               ),
               child: Text(
                 text,
                 style: TextStyle(
-                  fontSize: 16.0, // Fixed desktop value
+                  fontSize: isMobile ? 14.0 : 16.0,
                   fontFamily: 'Preah',
                   fontWeight: FontWeight.bold,
                   color: color,

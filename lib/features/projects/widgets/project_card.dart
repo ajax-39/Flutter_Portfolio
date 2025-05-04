@@ -36,6 +36,20 @@ class _ProjectCardState extends State<ProjectCard> {
   @override
   Widget build(BuildContext context) {
     final bool isMobile = ResponsiveUtils.isMobile(context);
+    final width = MediaQuery.of(context).size.width;
+
+    // Adjust sizes based on screen width for more fine-grained responsiveness
+    final double fontSize =
+        isMobile ? (width < 400 ? 14.0 : 16.0) : (width < 1200 ? 18.0 : 20.0);
+
+    final double descriptionFontSize =
+        isMobile ? (width < 400 ? 14.0 : 16.0) : (width < 1200 ? 14.0 : 15.0);
+
+    final double tagFontSize =
+        isMobile ? (width < 400 ? 12.0 : 14.0) : (width < 1200 ? 12.0 : 13.0);
+
+    final double iconSize =
+        isMobile ? (width < 400 ? 24.0 : 26.0) : (width < 1200 ? 32.0 : 36.0);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -63,7 +77,7 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
-          mainAxisSize: MainAxisSize.min, // Use min to avoid extra space
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Image Section
@@ -78,7 +92,7 @@ class _ProjectCardState extends State<ProjectCard> {
                     topRight: Radius.circular(22),
                   ),
                 ),
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(width < 400 ? 8.0 : 10.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.asset(widget.imagePath, fit: BoxFit.contain),
@@ -87,9 +101,11 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
             SizedBox(height: isMobile ? 8 : 12),
 
-            // Content Section - Tightened to remove extra space
+            // Content Section
             Padding(
-              padding: EdgeInsets.all(isMobile ? 16.0 : 14.0),
+              padding: EdgeInsets.all(
+                isMobile ? (width < 400 ? 12.0 : 16.0) : 14.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -104,7 +120,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           widget.title,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: isMobile ? 16 : 20,
+                            fontSize: fontSize,
                             fontWeight: FontWeight.bold,
                           ),
                           maxLines: 1,
@@ -118,13 +134,13 @@ class _ProjectCardState extends State<ProjectCard> {
                         child: GestureDetector(
                           onTap: _launchGithubUrl,
                           child: Container(
-                            height: isMobile ? 26 : 36,
-                            width: isMobile ? 26 : 36,
+                            height: iconSize,
+                            width: iconSize,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white.withOpacity(0.1),
                             ),
-                            padding: EdgeInsets.all(isMobile ? 8 : 6),
+                            padding: EdgeInsets.all(isMobile ? 6 : 8),
                             child: SvgPicture.asset(
                               'assets/icons/github.svg',
                               colorFilter: const ColorFilter.mode(
@@ -137,27 +153,25 @@ class _ProjectCardState extends State<ProjectCard> {
                       ),
                     ],
                   ),
-                  SizedBox(height: isMobile ? 8 : 12),
+                  SizedBox(height: isMobile ? (width < 400 ? 6 : 8) : 12),
 
                   // Description with fixed height to avoid variable spacing
                   Text(
                     widget.description,
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.7),
-                      fontSize: isMobile ? 16 : 15, // Increased font size
+                      fontSize: descriptionFontSize,
                       height: 1.4,
                     ),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: isMobile ? 8 : 12),
 
                   // Technology tags with optimized layout
                   if (widget.technologies.isNotEmpty) ...[
                     SizedBox(height: isMobile ? 12 : 10),
                     SizedBox(
-                      height:
-                          isMobile ? 30 : 28, // Adjusted height for larger font
+                      height: isMobile ? (width < 400 ? 26 : 30) : 28,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: widget.technologies.length,
@@ -166,8 +180,9 @@ class _ProjectCardState extends State<ProjectCard> {
                             padding: EdgeInsets.only(right: isMobile ? 6 : 4),
                             child: Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: isMobile ? 8 : 6,
-                                vertical: isMobile ? 4 : 3,
+                                horizontal:
+                                    isMobile ? (width < 400 ? 6 : 8) : 6,
+                                vertical: isMobile ? (width < 400 ? 3 : 4) : 3,
                               ),
                               decoration: BoxDecoration(
                                 color: const Color(
@@ -185,8 +200,7 @@ class _ProjectCardState extends State<ProjectCard> {
                                 widget.technologies[index],
                                 style: TextStyle(
                                   color: const Color(0xFF13BBFF),
-                                  fontSize:
-                                      isMobile ? 14 : 13, // Increased font size
+                                  fontSize: tagFontSize,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

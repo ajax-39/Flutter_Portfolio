@@ -7,34 +7,60 @@ class ProjectsDesktopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Responsive adjustments based on screen width
+    int crossAxisCount = 3; // Default for large screens
+    double childAspectRatio = 0.85; // Default aspect ratio
+
+    // Adjust grid layout based on screen width breakpoints
+    if (screenWidth < 1400) {
+      crossAxisCount = 2;
+      childAspectRatio = 0.78;
+    }
+    if (screenWidth < 1100) {
+      childAspectRatio = 0.82;
+    }
+
+    final titleFontSize = screenWidth < 1200 ? 40.0 : 45.0;
+    final contentWidth = screenWidth * (screenWidth < 1200 ? 0.9 : 0.85);
+    final gridSpacing = screenWidth < 1200 ? 20.0 : 30.0;
+
     return Column(
       children: [
-        Center(
-          child: Text(
-            'Projects',
-            style: GoogleFonts.baloo2(
-              fontSize: 45,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              letterSpacing: 1.0,
+        Padding(
+          padding: EdgeInsets.only(top: screenHeight * 0.03),
+          child: Center(
+            child: Text(
+              'Projects',
+              style: GoogleFonts.baloo2(
+                fontSize: titleFontSize,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 1.0,
+              ),
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: screenHeight * 0.03),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.85,
+          width: contentWidth,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth < 1200 ? 15.0 : 20.0,
+              vertical: screenWidth < 1200 ? 10.0 : 20.0,
+            ),
             child: GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 3,
-              childAspectRatio: 0.85, // Adjusted for rectangular image format
-              crossAxisSpacing: 30,
-              mainAxisSpacing: 30, // Increased spacing for better layout
+              crossAxisCount: crossAxisCount,
+              childAspectRatio: childAspectRatio,
+              crossAxisSpacing: gridSpacing,
+              mainAxisSpacing: gridSpacing,
               children: [
                 // First Row
-                ProjectCard( 
+                ProjectCard(
                   imagePath: 'assets/projects/scribble.png',
                   title: 'Scribble : Drawing & Guessing Game',
                   description:
@@ -53,7 +79,7 @@ class ProjectsDesktopWidget extends StatelessWidget {
                     'Firebase',
                     'Google Maps API',
                     'Geolocator',
-                    'Flutter_SMS', 
+                    'Flutter_SMS',
                   ],
                 ),
                 ProjectCard(
@@ -106,6 +132,7 @@ class ProjectsDesktopWidget extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: screenHeight * 0.03),
       ],
     );
   }

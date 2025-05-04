@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ContactUsMobileWidget extends StatelessWidget {
   const ContactUsMobileWidget({super.key});
 
-  final String recipientEmail = 'deshpandeamogh25@gmail.com';
+  final String recipientEmail = 'atharvjagzap@gmail.com';
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -29,44 +29,29 @@ class ContactUsMobileWidget extends StatelessWidget {
     }
   }
 
-  Future<void> _sendEmailWithContent(String name, String message) async {
-    final subject = 'Message from $name via Portfolio';
-    final body = 'Name: $name\n\nMessage:\n$message';
-
-    // Use Gmail specific URL scheme for mobile
-    final gmailUrl =
-        'https://mail.google.com/mail/?view=cm&fs=1'
-        '&to=$recipientEmail'
-        '&su=${Uri.encodeComponent(subject)}'
-        '&body=${Uri.encodeComponent(body)}';
+  Future<void> _launchGmailWithContent(
+    String name,
+    String email,
+    String message,
+  ) async {
+    // Construct the Gmail compose URL with exact same format as React component
+    final gmailLink =
+        'https://mail.google.com/mail/?view=cm&fs=1&to=atharvjagzap@gmail.com&su=Contact%20Form%20Submission&body=Name:%20${Uri.encodeComponent(name)}%0AEmail:%20${Uri.encodeComponent(email)}%0AMessage:%20${Uri.encodeComponent(message)}';
 
     try {
-      // Try Gmail first
-      if (await canLaunchUrl(Uri.parse(gmailUrl))) {
-        await launchUrl(
-          Uri.parse(gmailUrl),
-          mode: LaunchMode.externalApplication,
-        );
-      } else {
-        // Fallback to regular mailto
-        final Uri emailUri = Uri.parse(
-          'mailto:$recipientEmail?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}',
-        );
-
-        if (await canLaunchUrl(emailUri)) {
-          await launchUrl(emailUri);
-        } else {
-          print('Could not launch email');
-        }
+      final Uri uri = Uri.parse(gmailLink);
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        throw Exception('Could not launch $gmailLink');
       }
     } catch (e) {
-      print('Error launching email: $e');
+      print('Error launching Gmail: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final nameController = TextEditingController();
+    final emailController = TextEditingController();
     final messageController = TextEditingController();
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -87,7 +72,7 @@ class ContactUsMobileWidget extends StatelessWidget {
           Center(
             child: Text(
               'Contact Me',
-              style: GoogleFonts.tourney(
+              style: GoogleFonts.baloo2(
                 fontSize: 31,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -107,56 +92,18 @@ class ContactUsMobileWidget extends StatelessWidget {
                   children: [
                     _buildContactInfo(
                       'Email',
-                      'deshpandeamogh25@gmail.com',
+                      'atharvjagzap@gmail.com',
                       Icons.email,
                     ),
                     const SizedBox(height: 20),
-                    _buildContactInfo('Phone', '+91 7448205228', Icons.phone),
+                    _buildContactInfo('Phone', '+91 9975202001', Icons.phone),
                     const SizedBox(height: 20),
                     _buildContactInfo(
                       'Location',
-                      'Pune, India',
+                      'Nashik, India',
                       Icons.location_on,
                     ),
                     const SizedBox(height: 30),
-                    // GitHub Link
-                    Row(
-                      children: [
-                        Text(
-                          'GitHub',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Preah',
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap:
-                                () => _launchURL('https://github.com/Amogh050'),
-                            child: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/icons/github.svg',
-                                width: 24,
-                                height: 24,
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
@@ -212,6 +159,29 @@ class ContactUsMobileWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       TextField(
+                        controller: emailController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: 'Your Email',
+                          hintStyle: TextStyle(
+                            color: Colors.white.withOpacity(0.5),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(0.3),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                              color: Color(0xFF13BBFF),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextField(
                         controller: messageController,
                         maxLines: 5,
                         style: const TextStyle(color: Colors.white),
@@ -237,31 +207,26 @@ class ContactUsMobileWidget extends StatelessWidget {
                       const SizedBox(height: 20),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
+                        child: _buildActionButton(
+                          text: 'Send Message',
+                          color: const Color(0xFF13BBFF),
                           onPressed: () {
                             if (nameController.text.isNotEmpty &&
+                                emailController.text.isNotEmpty &&
                                 messageController.text.isNotEmpty) {
-                              _sendEmailWithContent(
+                              _launchGmailWithContent(
                                 nameController.text.trim(),
+                                emailController.text.trim(),
                                 messageController.text.trim(),
                               );
+
+                              // Reset form after submission
+                              nameController.clear();
+                              emailController.clear();
+                              messageController.clear();
                             }
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF13BBFF),
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: const Text(
-                            'Send Message',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Preah',
-                              fontSize: 16,
-                            ),
-                          ),
+                          isMobile: true,
                         ),
                       ),
                     ],
@@ -348,6 +313,43 @@ class ContactUsMobileWidget extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildActionButton({
+    required String text,
+    required Color color,
+    required VoidCallback onPressed,
+    required bool isMobile,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.2),
+        border: Border.all(color: color, width: 1.5),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 16.0 : 24.0,
+              vertical: isMobile ? 8.0 : 12.0,
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: isMobile ? 14.0 : 16.0,
+                fontFamily: 'Preah',
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
