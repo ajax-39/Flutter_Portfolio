@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:portfolio/features/contact_us/contact_us_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../intro/widgets/typing_animation_widget.dart';
 import '../../../design/circuit_background.dart';
@@ -34,40 +33,33 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     final isMobile = ResponsiveUtils.isMobile(context);
 
     // Responsive sizing
-    final nameTextSize =
-        isMobile
-            ? size.width *
-                0.08 // Dynamic size for mobile
-            : size.width > 1400
+    final nameTextSize = isMobile
+        ? size.width * 0.08 // Dynamic size for mobile
+        : size.width > 1400
             ? 90.0 // Large desktop
             : size.width > 800
-            ? 70.0 // Medium desktop
-            : 50.0; // Small desktop
+                ? 70.0 // Medium desktop
+                : 50.0; // Small desktop
 
-    final greetingTextSize =
-        isMobile
-            ? size.width *
-                0.05 // Dynamic size for mobile
-            : size.width > 1400
+    final greetingTextSize = isMobile
+        ? size.width * 0.05 // Dynamic size for mobile
+        : size.width > 1400
             ? 32.0 // Large desktop
             : size.width > 800
-            ? 28.0 // Medium desktop
-            : 24.0; // Small desktop
+                ? 28.0 // Medium desktop
+                : 24.0; // Small desktop
 
-    final typingAnimationSize =
-        isMobile
-            ? size.width *
-                0.06 // Dynamic size for mobile
-            : size.width > 1400
+    final typingAnimationSize = isMobile
+        ? size.width * 0.06 // Dynamic size for mobile
+        : size.width > 1400
             ? 50.0 // Large desktop
             : size.width > 800
-            ? 40.0 // Medium desktop
-            : 30.0; // Small desktop
+                ? 40.0 // Medium desktop
+                : 30.0; // Small desktop
 
-    final aboutTextSize =
-        isMobile
-            ? 16.0
-            : size.width > 1400
+    final aboutTextSize = isMobile
+        ? 16.0
+        : size.width > 1400
             ? 18.0
             : 16.0;
 
@@ -110,7 +102,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   children: [
                     // "Hey there!" text
                     Text(
-                      'Hey there! 👋',
+                      'Hey there!',
                       style: GoogleFonts.poppins(
                         fontSize: greetingTextSize,
                         fontWeight: FontWeight.w500,
@@ -145,7 +137,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             isMobile ? size.width * 0.9 : size.width * 0.5,
                       ),
                       child: Text(
-                        "I'm Atharv, an Android developer skilled in Flutter. I also have backend experience using Spring Boot. I love building real-world apps. I enjoy turning ideas into smooth, working mobile apps. From designing UI to writing backend code — I do it all.",
+                        """Android Developer with 3 years of experience building high-performance mobile apps using Kotlin and Flutter. Skilled in Android architecture, Jetpack Compose, Coroutines, and Dagger/Hilt. Proficient in backend development with Spring Boot for scalable APIs and end-to-end system design.""",
                         style: GoogleFonts.poppins(
                           fontSize: aboutTextSize,
                           color: Colors.white.withOpacity(0.9),
@@ -155,50 +147,64 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
 
                     SizedBox(height: isMobile ? 25.0 : 40.0),
-                    // Social media icons
-                    Wrap(
-                      spacing: isMobile ? 15.0 : 20.0,
-                      runSpacing: isMobile ? 15.0 : 20.0,
-                      children: [
-                        // GitHub
-                        _SocialButton(
-                          icon: FontAwesomeIcons.github,
-                          url: 'https://github.com/ajax-39',
-                          size: isMobile ? 42.0 : 52.0,
-                          iconSize: isMobile ? 22.0 : 30.0,
-                        ),
-                        // LinkedIn
-                        _SocialButton(
-                          icon: FontAwesomeIcons.linkedin,
-                          url: 'https://www.linkedin.com/in/atharv-jagzap/',
-                          size: isMobile ? 42.0 : 52.0,
-                          iconSize: isMobile ? 22.0 : 30.0,
-                        ),
-                        // WhatsApp
-                        _SocialButton(
-                          icon: FontAwesomeIcons.whatsapp,
-                          url: 'https://wa.me/919975202001',
-                          size: isMobile ? 42.0 : 52.0,
-                          iconSize: isMobile ? 22.0 : 30.0,
-                        ),
-                      ],
-                    ),
 
-                    SizedBox(height: isMobile ? 25.0 : 40.0),
-                    // Action buttons
-                    Wrap(
-                      spacing: isMobile ? 10.0 : 16.0,
-                      runSpacing: isMobile ? 10.0 : 16.0,
-                      children: [
-                        _buildActionButton(
-                          text: 'Resume',
-                          color: const Color(0xFF13BBFF),
-                          onPressed:
-                              () => _launchURL(
-                                'https://drive.google.com/file/d/1I45qZBRz9n862Ovx9-rhauMeJemrnwS1/view?usp=drive_link',
-                              ),
+                    // Wrap social media icons and resume button in a single InteractiveElement
+                    InteractiveElement(
+                      child: SizedBox(
+                        width: isMobile ? double.infinity : null,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Social media icons
+                            Wrap(
+                              spacing: isMobile ? 15.0 : 20.0,
+                              runSpacing: isMobile ? 15.0 : 20.0,
+                              children: [
+                                // GitHub
+                                _SocialButton(
+                                  icon: FontAwesomeIcons.github,
+                                  url: 'https://github.com/ajax-39',
+                                  size: isMobile ? 42.0 : 52.0,
+                                  iconSize: isMobile ? 22.0 : 30.0,
+                                ),
+                                // LinkedIn
+                                _SocialButton(
+                                  icon: FontAwesomeIcons.linkedin,
+                                  url:
+                                      'https://www.linkedin.com/in/atharv-jagzap/',
+                                  size: isMobile ? 42.0 : 52.0,
+                                  iconSize: isMobile ? 22.0 : 30.0,
+                                ),
+                                // LeetCode
+                                _SocialButton(
+                                  icon: FontAwesomeIcons
+                                      .code, // Use a code icon for LeetCode
+                                  url: 'https://leetcode.com/u/Ajax_03/',
+                                  size: isMobile ? 42.0 : 52.0,
+                                  iconSize: isMobile ? 22.0 : 30.0,
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: isMobile ? 25.0 : 40.0),
+
+                            // Action buttons
+                            Wrap(
+                              spacing: isMobile ? 10.0 : 16.0,
+                              runSpacing: isMobile ? 10.0 : 16.0,
+                              children: [
+                                _buildActionButton(
+                                  text: 'Resume',
+                                  color: const Color(0xFF13BBFF),
+                                  onPressed: () => _launchURL(
+                                    'https://drive.google.com/file/d/1Isq-Uye4otkq7RZ8zvrOzFL83vm4L7h5/view?usp=drive_link',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -217,32 +223,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }) {
     final isMobile = ResponsiveUtils.isMobile(context);
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: Container(
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.2),
-          border: Border.all(color: color, width: 1.5),
+    return Container(
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.2),
+        border: Border.all(color: color, width: 1.5),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
           borderRadius: BorderRadius.circular(8),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onPressed,
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 16.0 : 24.0,
-                vertical: isMobile ? 8.0 : 12.0,
-              ),
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: isMobile ? 14.0 : 16.0,
-                  fontFamily: 'Preah',
-                  fontWeight: FontWeight.bold,
-                  color: color,
-                ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 16.0 : 24.0,
+              vertical: isMobile ? 8.0 : 12.0,
+            ),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: isMobile ? 14.0 : 16.0,
+                fontFamily: 'Preah',
+                fontWeight: FontWeight.bold,
+                color: color,
               ),
             ),
           ),
@@ -258,14 +262,12 @@ class _SocialButton extends StatelessWidget {
   final String url;
   final double size;
   final double iconSize;
-  final Color color;
 
   const _SocialButton({
     required this.icon,
     required this.url,
     required this.size,
     required this.iconSize,
-    this.color = const Color(0xFF13BBFF),
   });
 
   Future<void> _launchURL(String url) async {
@@ -279,23 +281,22 @@ class _SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          shape: BoxShape.circle,
-          border: Border.all(color: color, width: 1.5),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => _launchURL(url),
-            borderRadius: BorderRadius.circular(size / 2),
-            child: Center(child: FaIcon(icon, color: color, size: iconSize)),
-          ),
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        shape: BoxShape.circle,
+        border: Border.all(color: const Color(0xFF13BBFF), width: 1.5),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => _launchURL(url),
+          borderRadius: BorderRadius.circular(size / 2),
+          child: Center(
+              child:
+                  FaIcon(icon, color: const Color(0xFF13BBFF), size: iconSize)),
         ),
       ),
     );

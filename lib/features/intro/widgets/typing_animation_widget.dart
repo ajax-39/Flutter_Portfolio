@@ -25,9 +25,9 @@ class _TypingAnimationWidgetState extends State<TypingAnimationWidget> {
   bool _isWaiting = false;
   int _currentRoleIndex = 0;
   final List<String> _roles = [
+    'Android Developer',
     'Flutter Developer',
     'Java Developer',
-    'Web Developer',
     'Problem Solver',
   ];
 
@@ -85,11 +85,11 @@ class _TypingAnimationWidgetState extends State<TypingAnimationWidget> {
     return Text(
       _currentText,
       style: GoogleFonts.bangers(
-      color: widget.textColor,
-      fontSize: widget.fontSize,
-      // fontWeight: FontWeight.w600,
+        color: widget.textColor,
+        fontSize: widget.fontSize,
+        // fontWeight: FontWeight.w600,
       ),
       textAlign: widget.isMobile ? TextAlign.center : TextAlign.left,
     );
   }
-} 
+}

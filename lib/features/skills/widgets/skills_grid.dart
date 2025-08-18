@@ -84,7 +84,7 @@ class SkillsGrid extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: secondRow.length,
-                itemBuilder: (context, index) {
+                itemBuilder: (context, index) { 
                   return Padding(
                     padding: EdgeInsets.only(right: gridSpacing),
                     child: SkillCard(

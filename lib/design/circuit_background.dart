@@ -23,6 +23,7 @@ class _CircuitBoardBackgroundState extends State<CircuitBoardBackground> with Si
   final Random random = Random();
   Offset _mousePosition = Offset.zero;
   bool _mouseInside = false;
+  bool _isHoveringInteractiveElement = false;
   
   @override
   void initState() {
@@ -61,6 +62,7 @@ class _CircuitBoardBackgroundState extends State<CircuitBoardBackground> with Si
       onExit: (event) {
         setState(() {
           _mouseInside = false;
+          _isHoveringInteractiveElement = false;
         });
       },
       onHover: (event) {
@@ -95,7 +97,7 @@ class _CircuitBoardBackgroundState extends State<CircuitBoardBackground> with Si
                   lineColor: widget.lineColor,
                   nodeColor: widget.nodeColor,
                   mousePosition: _mousePosition,
-                  mouseInside: _mouseInside,
+                  mouseInside: _mouseInside && !_isHoveringInteractiveElement,
                   screenSize: MediaQuery.of(context).size,
                 ),
                 size: Size(
@@ -106,10 +108,41 @@ class _CircuitBoardBackgroundState extends State<CircuitBoardBackground> with Si
             },
           ),
           
-          // Content
-          widget.child,
+          // Content with notification listener for hover detection
+          NotificationListener<InteractiveElementHoverNotification>(
+            onNotification: (notification) {
+              setState(() {
+                _isHoveringInteractiveElement = notification.isHovering;
+              });
+              return true;
+            },
+            child: widget.child,
+          ),
         ],
       ),
+    );
+  }
+}
+
+// Custom notification to signal interactive element hover
+class InteractiveElementHoverNotification extends Notification {
+  final bool isHovering;
+  
+  InteractiveElementHoverNotification(this.isHovering);
+}
+
+// Use this widget to wrap interactive elements like buttons and cards
+class InteractiveElement extends StatelessWidget {
+  final Widget child;
+  
+  const InteractiveElement({Key? key, required this.child}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => InteractiveElementHoverNotification(true).dispatch(context),
+      onExit: (_) => InteractiveElementHoverNotification(false).dispatch(context),
+      child: child,
     );
   }
 }

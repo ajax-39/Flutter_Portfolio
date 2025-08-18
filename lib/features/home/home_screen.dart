@@ -4,7 +4,6 @@ import '../common/responsive_utils.dart';
 import '../skills/widgets/skills_desktop_widget.dart';
 import '../skills/widgets/skills_mobile_widget.dart';
 import '../projects/widgets/projects_desktop_widget.dart';
-import '../projects/widgets/projects_mobile_widget.dart';
 import '../contact_us/widgets/contact_us_desktop_widget.dart';
 import '../contact_us/widgets/contact_us_mobile_widget.dart';
 import '../welcome/widgets/welcome_screen.dart';
@@ -197,10 +196,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         right: isDesktop ? 100.0 : 20.0,
                         bottom: 50.0,
                       ),
-                      child:
-                          isDesktop
-                              ? const ProjectsDesktopWidget()
-                              : const ProjectsMobileWidget(),
+                      child: const ProjectsDesktopWidget(),
                     ),
                   ),
                 ),

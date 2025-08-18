@@ -9,7 +9,7 @@ class SkillCard extends StatefulWidget {
   final double borderRadius;
   final double elevation;
   final double textSize;
-  final bool isDesktop;
+  final bool isDesktop; 
 
   const SkillCard({
     super.key,

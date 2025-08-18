@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:portfolio/design/circuit_background.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsDesktopWidget extends StatelessWidget {
@@ -227,19 +228,21 @@ class ContactUsDesktopWidget extends StatelessWidget {
                                     }
                                   },
                                   borderRadius: BorderRadius.circular(8),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24.0,
-                                      vertical: 12.0,
-                                    ),
-                                    child: Text(
-                                      'Send Message',
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontFamily: 'Preah',
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff13bbff),
+                                  child: InteractiveElement(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0,
+                                        vertical: 12.0,
+                                      ),
+                                      child: Text(
+                                        'Send Message',
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontFamily: 'Preah',
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff13bbff),
+                                        ),
                                       ),
                                     ),
                                   ),
