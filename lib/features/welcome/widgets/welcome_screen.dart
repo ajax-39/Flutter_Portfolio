@@ -197,7 +197,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   text: 'Resume',
                                   color: const Color(0xFF13BBFF),
                                   onPressed: () => _launchURL(
-                                    'https://drive.google.com/file/d/1Isq-Uye4otkq7RZ8zvrOzFL83vm4L7h5/view?usp=drive_link',
+                                    'https://drive.google.com/file/d/16txH814eIEjuIStbpAAo8M6MrTbUVqXQ/view?usp=sharing',
                                   ),
                                 ),
                               ],

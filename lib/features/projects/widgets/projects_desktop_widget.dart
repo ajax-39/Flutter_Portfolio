@@ -45,17 +45,40 @@ class ProjectsDesktopWidget extends StatelessWidget {
                 cardWidth: cardWidth,
                 horizontalPadding: horizontalPadding,
                 verticalPadding: verticalSpacing,
+                imagePath: 'assets/projects/streetBuddy.png',
+                title: 'StreetBuddy: Smart Travel Buddy',
+                description:
+                    'Welcome to "StreetBuddy" your smart travel buddy for exploring the best of every city! Designed especially for Indian travelers, StreetBuddy helps you find delicious food spots, vibrant shopping markets, famous attractions, and hidden gems that only locals know about.',
+                githubUrl: 'https://github.com/ajax-39/StreetBuddy_Flutter.git',
+                technologies: [
+                  'Supabase',
+                  'Provider',
+                  'Admob',
+                  'Dio',
+                  'Hive',
+                  'Twilio'
+                ],
+              ),
+
+              _buildProjectItem(
+                context: context,
+                isMobile: true,
+                cardWidth: cardWidth,
+                horizontalPadding: horizontalPadding,
+                verticalPadding: verticalSpacing,
                 imagePath: 'assets/projects/roomly.png',
                 title: 'Roomly : Hotel Booking App',
                 description:
                     'A complete hotel booking platform with user and hotel owner modules, real-time updates, wallet, and Razorpay integration. Built using Flutter, Firebase, and Clean Architecture.',
                 githubUrl: 'https://github.com/ajax-39/Flutter_Roomly',
                 technologies: [
+                  'Razorpay',
+                  'MVVM',
+                  'GoRouter',
+                  'GetIt',
+                  'Riverpod',
                   'Flutter',
                   'Firebase',
-                  'Razorpay',
-                  'Clean Architecture',
-                  'Riverpod',
                 ],
               ),
 
@@ -70,7 +93,32 @@ class ProjectsDesktopWidget extends StatelessWidget {
                 description:
                     'Built with Socket.IO, Flutter, Node.js, and MongoDB. Implements real-time multiplayer functionality with custom drawing canvas and gesture detection.',
                 githubUrl: 'https://github.com/ajax-39/Scribble',
-                technologies: ['Socket.IO', 'Flutter', 'Node.js', 'MongoDB'],
+                technologies: [
+                  'Socket.IO',
+                  'Node.js',
+                  'MongoDB',
+                  'REST API',
+                  'Flutter',
+                ],
+              ),
+              _buildProjectItem(
+                context: context,
+                isMobile: true,
+                cardWidth: cardWidth,
+                horizontalPadding: horizontalPadding,
+                verticalPadding: verticalSpacing,
+                imagePath: 'assets/projects/pokedex.png',
+                title: 'Pokedex : Pokemon App',
+                description:
+                    'Developed with Flutter and PokeAPI integration. Uses Riverpod for state management, Dio for API Calls and SharedPreferences for local storage.',
+                githubUrl: 'https://github.com/ajax-39/Flutter_Pokedex',
+                technologies: [
+                  'PokeAPI',
+                  'Riverpod',
+                  'Shared Preferences',
+                  'Flutter',
+                  'Dio',
+                ],
               ),
 
               _buildProjectItem(
@@ -85,25 +133,11 @@ class ProjectsDesktopWidget extends StatelessWidget {
                     'Built with Flutter, Firebase, and Google Maps API. Implements real-time location tracking with Geolocator and Flutter_SMS for Alert Message sending.',
                 githubUrl: 'https://github.com/ajax-39/Flutter_bSafe',
                 technologies: [
-                  'Flutter',
-                  'Firebase',
                   'Google Maps API',
                   'Geolocator',
+                  'Flutter',
+                  'Firebase',
                 ],
-              ),
-
-              _buildProjectItem(
-                context: context,
-                isMobile: true,
-                cardWidth: cardWidth,
-                horizontalPadding: horizontalPadding,
-                verticalPadding: verticalSpacing,
-                imagePath: 'assets/projects/pokedex.png',
-                title: 'Pokedex : Pokemon App',
-                description:
-                    'Developed with Flutter and PokeAPI integration. Uses Riverpod for state management, Dio for API Calls and SharedPreferences for local storage.',
-                githubUrl: 'https://github.com/ajax-39/Flutter_Pokedex',
-                technologies: ['Flutter', 'PokeAPI', 'Riverpod', 'Dio'],
               ),
 
               _buildProjectItem(
@@ -118,20 +152,6 @@ class ProjectsDesktopWidget extends StatelessWidget {
                     'Developed with Flutter, Firebase (Firestore/Auth/Storage), and Riverpod 2.0 for state management. Features real-time messaging with push notifications.',
                 githubUrl: 'https://github.com/ajax-39/Flutter_WhatsApp_Clone',
                 technologies: ['Flutter', 'Firebase', 'Firestore', 'Riverpod'],
-              ),
-
-              _buildProjectItem(
-                context: context,
-                isMobile: true,
-                cardWidth: cardWidth,
-                horizontalPadding: horizontalPadding,
-                verticalPadding: verticalSpacing,
-                imagePath: 'assets/projects/infomeal.png',
-                title: 'InfoMeal: Recipe App',
-                description:
-                    'Created using Flutter, Dio for REST API integration, and Provider for state management. Implements custom UI components and animations.',
-                githubUrl: 'https://github.com/ajax-39/Flutter_InfoMeal',
-                technologies: ['Flutter', 'Dio', 'Provider', 'REST API'],
               ),
             ],
           ),
@@ -191,6 +211,23 @@ class ProjectsDesktopWidget extends StatelessWidget {
               children: [
                 // First Row
                 ProjectCard(
+                  imagePath: 'assets/projects/streetBuddy.png',
+                  title: 'StreetBuddy: Smart Travel Buddy',
+                  description:
+                      'StreetBuddy – your smart travel buddy for exploring every city. Discover tasty food joints, vibrant markets, and must-see attractions. Uncover hidden gems and local favorites on every trip!',
+                  githubUrl:
+                      'https://github.com/ajax-39/StreetBuddy_Flutter.git',
+                  technologies: [
+                    'Supabase',
+                    'Provider',
+                    'Admob',
+                    'dio',
+                    'Hive',
+                    'Twilio',
+                  ],
+                  isMobileCard: false,
+                ),
+                ProjectCard(
                   imagePath: 'assets/projects/roomly.png',
                   title: 'Roomly : Hotel Booking App',
                   description:
@@ -218,6 +255,8 @@ class ProjectsDesktopWidget extends StatelessWidget {
                   ],
                   isMobileCard: false,
                 ),
+
+                // Second Row
                 ProjectCard(
                   imagePath: 'assets/projects/bSafe.png',
                   title: 'bSafe : Women\'s Safety App',
@@ -233,8 +272,6 @@ class ProjectsDesktopWidget extends StatelessWidget {
                   ],
                   isMobileCard: false,
                 ),
-
-                // Second Row
                 ProjectCard(
                   imagePath: 'assets/projects/pokedex.png',
                   title: 'Pokedex : Pokemon App',
@@ -263,15 +300,6 @@ class ProjectsDesktopWidget extends StatelessWidget {
                     'Firestore',
                     'Riverpod 2.0',
                   ],
-                  isMobileCard: false,
-                ),
-                ProjectCard(
-                  imagePath: 'assets/projects/infomeal.png',
-                  title: 'InfoMeal: Recipe App',
-                  description:
-                      'Created using Flutter, Dio for REST API integration, and Provider for state management. Implements custom UI components and animations.',
-                  githubUrl: 'https://github.com/ajax-39/Flutter_InfoMeal',
-                  technologies: ['Flutter', 'Dio', 'Provider', 'REST API'],
                   isMobileCard: false,
                 ),
               ],
